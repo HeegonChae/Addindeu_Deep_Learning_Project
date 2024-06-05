@@ -4,14 +4,20 @@ from sensor_msgs.msg import Image
 from std_msgs.msg import String
 import rclpy
 from rclpy.node import Node
+from rclpy.qos import QoSProfile, QoSReliabilityPolicy, QoSHistoryPolicy
 from cv_bridge import CvBridge
 from datetime import datetime
 
 class VideoSubscriber(Node):
     def __init__(self):
         super().__init__('video_subscriber')
-        self.subscription = self.create_subscription(Image, 'video_topic', self.callback, 10)
-        self.signal_subscription = self.create_subscription(String, 'video_signal', self.signal_callback, 10)
+        qos_profile = QoSProfile(
+            reliability=QoSReliabilityPolicy.RELIABLE,
+            history=QoSHistoryPolicy.KEEP_LAST,
+            depth=10
+        )
+        self.subscription = self.create_subscription(Image, 'video_topic', self.callback, qos_profile)
+        self.signal_subscription = self.create_subscription(String, 'video_signal', self.signal_callback, qos_profile)
         self.bridge = CvBridge()
         self.video_writer = None
         self.folder_path = None
