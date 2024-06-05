@@ -3,14 +3,20 @@ from sensor_msgs.msg import Image
 from std_msgs.msg import String
 import rclpy
 from rclpy.node import Node
+from rclpy.qos import QoSProfile, QoSReliabilityPolicy, QoSHistoryPolicy
 from cv_bridge import CvBridge
 import time
 
 class VideoPublisher(Node):
     def __init__(self):
         super().__init__('video_publisher')
-        self.publisher_ = self.create_publisher(Image, 'video_topic', 10)
-        self.signal_publisher_ = self.create_publisher(String, 'video_signal', 10)
+        qos_profile = QoSProfile(
+            reliability=QoSReliabilityPolicy.RELIABLE,
+            history=QoSHistoryPolicy.KEEP_LAST,
+            depth=10
+        )
+        self.publisher_ = self.create_publisher(Image, 'video_topic', qos_profile)
+        self.signal_publisher_ = self.create_publisher(String, 'video_signal', qos_profile)
         self.timer = self.create_timer(0.1, self.publish_frame)
         self.bridge = CvBridge()
         self.cap = cv2.VideoCapture('./data/umin2.MOV')
