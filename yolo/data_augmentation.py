@@ -2,16 +2,18 @@ import os
 import random
 from PIL import Image, ImageEnhance, ImageOps
 import glob
-from torchvision import transforms
-import numpy as np
 
 # 이미지 폴더 경로 설정
-image_folder_path = 'diretory'
+image_folder_path = '/home/edu/dev_ws/Project3/data/fire_extinguisher/valid/images'
 
 # 파일 경로에서 확장자 부분을 추출하는 함수
 def get_extension(filename):
     parts = filename.split('.')
     return parts[-1] if len(parts) > 1 else ''
+
+# 파일 경로에서 파일 이름(확장자 제외)을 추출하는 함수
+def get_filename_without_extension(filename):
+    return '.'.join(filename.split('.')[:-1])
 
 # 이미지 파일 리스트 가져오기 (JPG 확장자만 가져오기)
 image_files = [f for f in glob.glob(os.path.join(image_folder_path, '*.*')) if get_extension(f).lower() == 'jpg']
@@ -66,7 +68,19 @@ def augment_image(image):
 for image_path in image_files:
     img = Image.open(image_path)
     img_augmented = augment_image(img)
-    img_augmented.save(image_path)  # 원본 이미지 덮어쓰기
+    
+    # 새로운 파일 이름 생성
+    original_filename_without_extension = get_filename_without_extension(os.path.basename(image_path))
+    extension = get_extension(image_path)
+    new_image_path = os.path.join(image_folder_path, f"{original_filename_without_extension}_1.{extension}")
+    
+    # 숫자 증가하면서 파일 저장
+    counter = 1
+    while os.path.exists(new_image_path):
+        counter += 1
+        new_image_path = os.path.join(image_folder_path, f"{original_filename_without_extension}_{counter}.{extension}")
+    
+    img_augmented.save(new_image_path)
 
 print(f"총 {len(image_files)}개의 이미지에 데이터 증강을 적용했습니다.")
 
