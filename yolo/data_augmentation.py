@@ -4,7 +4,7 @@ from PIL import Image, ImageEnhance, ImageOps
 import glob
 
 # 이미지 폴더 경로 설정
-image_folder_path = '/home/edu/dev_ws/Project3/data/fire_extinguisher/valid/images'
+image_folder_path = 'your own directory'
 
 # 파일 경로에서 확장자 부분을 추출하는 함수
 def get_extension(filename):
