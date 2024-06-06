@@ -1,7 +1,7 @@
 import os
 
 # 경로
-label_dir = 'diretory'
+label_dir = 'your own directory'
 
 # 모든 txt 파일에 대해 작업 수행
 for filename in os.listdir(label_dir):
