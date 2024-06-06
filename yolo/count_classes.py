@@ -1,7 +1,7 @@
 import os
 
 # 디렉터리 경로 설정
-directory = 'diretory'
+directory = 'your own directory'
 
 # 맨 앞 숫자가 '0'인 파일과 '2'인 파일의 개수를 세는 변수 초기화
 count_0 = 0
