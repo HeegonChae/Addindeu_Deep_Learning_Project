@@ -8,7 +8,6 @@ import torch.nn as nn
 from torch.utils.data import DataLoader, Dataset
 from datetime import datetime
 
-
 # YOLOv8 Pose 모델 로드
 model = YOLO('yolov8s-pose.pt')
 
@@ -114,6 +113,13 @@ np.save(os.path.join(skeleton_data_dir, 'fall_down2.npy'), skeleton_sequences)
 
 print(f'Skeleton data shape: {skeleton_sequences.shape}')
 
+# 하이퍼파라미터
+input_size = 24
+seq_length = 30
+hidden_size = 64
+num_layers = 2
+output_size = 3
+batch_size = 32
 
 # 모델 정의
 class LSTMModel(nn.Module):
