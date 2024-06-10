@@ -1,28 +1,22 @@
 import os
 import json
 import re
-# pip install mysql-connector-python
-import mysql.connector as con
+from Connect import Connect
 
 # JSON 파일 경로
 json_dir = './data/detection'
 
-class Connect():
-    def __init__(self, User, Password):
-        self.conn = con.connect(
-            host='database-1.cdigc6umyoh0.ap-northeast-2.rds.amazonaws.com',
-            user=User,
-            password=Password,
-            database='autobuscctvdb'
-        )
-        self.cursor = self.conn.cursor(buffered=True)
+class Uploadjson():
+    def __init__(self, db_instance):
+        self.cursor = db_instance.cursor
+        self.conn = db_instance.conn
 
-    def disConnection(self):
-        if self.conn:
-            print('!!!!!!DB SHUT DOWN!!!!!!')
-            self.conn.close()
-            self.cursor.close()
-            self.conn = None
+    # def disConnection(self):
+    #     if self.conn:
+    #         print('!!!!!!DB SHUT DOWN!!!!!!')
+    #         self.conn.close()
+    #         self.cursor.close()
+    #         self.conn = None
 
     def createQuery(self, query):
         self.cursor.execute(query)
@@ -73,16 +67,17 @@ class Connect():
                     case_num += 1
 
         print("데이터 삽입 완료")
-
+    
     # 데이터베이스에서 테이블 정보를 가져오는 함수 정의
     def fetchImageDataQuery(self, query):
         self.cursor.execute(query)
         return self.cursor.fetchall()
-    
+
 if __name__ == "__main__":
     print(os.getcwd())
 
     db_instance = Connect("driver", "0603")
+    upload_json = Uploadjson(db_instance)
 
     # Case 0.
     query = """
@@ -94,19 +89,21 @@ if __name__ == "__main__":
                 bbox VARCHAR(50)
             );
             """
-    db_instance.createQuery(query)    
+    upload_json.createQuery(query)    
 
-    # Case 1.
-    query = """
-            INSERT INTO image_json (Case_num, Filename, Detected_objects, Id, bbox)
-            VALUES (%s, %s, %s, %s, %s);
-            """
-    db_instance.insertQuery(query)
+    # # Case 1.
+    # query = """
+    #         INSERT INTO image_json (Case_num, Filename, Detected_objects, Id, bbox)
+    #         VALUES (%s, %s, %s, %s, %s);
+    #         """
+    # upload_json.insertQuery(query)
     
     # # Case 2.
     # query = """
-    #         SELECT Filename, Detected_objects, bbox FROM image_json
+    #         SELECT Filename, Detected_objects, bbox FROM image_json;
     #         """
-    # results = db_instance.fetchImageDataQuery(query)
-    
+    # results = upload_json.fetchImageDataQuery(query)
+    # print(results)
+
     db_instance.disConnection()
+
