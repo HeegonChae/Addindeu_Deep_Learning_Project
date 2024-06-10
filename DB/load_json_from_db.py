@@ -1,6 +1,5 @@
-import mysql.connector as con
 import os 
-from upload_json_to_db import *
+from Connect import Connect
 import cv2
 
 # 검출된 객체있는 이미지 경로
@@ -20,8 +19,13 @@ class_colors = {
 
 class Drawbbox():
     def __init__(self, db_instance):
-        self.db_instance = db_instance
+        self.cursor = db_instance.cursor
 
+    # 데이터베이스에서 테이블 정보를 가져오는 함수 정의
+    def fetchImageDataQuery(self, query):
+        self.cursor.execute(query)
+        return self.cursor.fetchall()
+    
     # 검출 결과를 그리기 위한 함수 정의
     def draw_boxes(self, image, bbox, label, obj_id, color):
         x1, y1, x2, y2 = map(int, bbox.split(','))  # bounding box coordinates
@@ -30,7 +34,9 @@ class Drawbbox():
         cv2.putText(image, label_text, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, color, 2)
 
     def loadDataFromDB(self, query):
-        image_data = self.db_instance.fetchImageDataQuery(query)
+        image_data = self.fetchImageDataQuery(query)
+        # print(image_data)
+        # print('(((((((((((((((((((())))))))))))))))))))')
         image_dict = {}
         for filename, detected_object, obj_id, bbox in image_data:
             if filename not in image_dict:
@@ -48,11 +54,12 @@ class Drawbbox():
                 result_path = os.path.join(result_img_dir, file_base_name)
                 cv2.imwrite(result_path, image)
 
-if __name__ == "__main__" :
-    print(os.getcwd())
-
+if __name__ == "__main__":
     db_instance = Connect("driver", "0603")
-    draw_bbox_instance = Drawbbox(db_instance)
-    query = "SELECT Filename, Detected_objects, ID, bbox FROM image_json;"
-    draw_bbox_instance.loadDataFromDB(query)
+    draw_bbox = Drawbbox(db_instance)
+
+    # Case 1.
+    query = "SELECT Filename, Detected_objects, bbox FROM image_json"
+    draw_bbox.loadDataFromDB(query)
+    
     db_instance.disConnection()
