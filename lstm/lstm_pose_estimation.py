@@ -255,7 +255,7 @@ if len(change_points) > 0:
 video_info = {
     "video_info": {
         "folder": folder_path,
-        "video_name": f'C_{video_name}.avi',
+        "video_name": f'C_{video_name}.mp4',
         "json_name": f'C_{video_name}.json',
         "txt_name": f'C_{video_name}.txt',
     },
