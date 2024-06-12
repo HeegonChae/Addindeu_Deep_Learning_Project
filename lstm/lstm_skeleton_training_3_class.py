@@ -17,7 +17,7 @@ class SkeletonDataset(Dataset):
         return len(self.data) - self.seq_length + 1
     
     def __getitem__(self, idx):
-        input_data = self.data[idx:idx + self.seq_length, :24]  # 181개 프레임의 x, y 좌표
+        input_data = self.data[idx:idx + self.seq_length, :24]
         label = int(self.data[idx + self.seq_length - 1, -1])
 
         input_sequence = torch.tensor(input_data).float()
@@ -50,16 +50,16 @@ class LSTMModel(nn.Module):
 
 # 수정된 하이퍼파라미터
 input_size = 24  # x, y 좌표가 각각 12개씩 총 24개
-seq_length = 150  # 150개 프레임
+seq_length = 60 # 60개 프레임
 hidden_size = 64
 num_layers = 2
-output_size = 2
+output_size = 3
 num_epochs = 10
 batch_size = 32
 learning_rate = 0.001
 
 # 데이터셋 및 데이터로더 생성
-train_dataset = SkeletonDataset('./walking_JJIN.txt', seq_length=seq_length)
+train_dataset = SkeletonDataset('./data/walk_result.txt', seq_length=seq_length)
 train_loader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
 
 
@@ -91,4 +91,4 @@ for epoch in range(num_epochs):
     print(f'Epoch [{epoch+1}/{num_epochs}], Loss: {loss.item():.4f}')
 
 # 학습된 모델 저장
-torch.save(model.state_dict(), 'lstm_model_v3.pth')
+torch.save(model.state_dict(), 'lstm_model_pen_V2.pth')
