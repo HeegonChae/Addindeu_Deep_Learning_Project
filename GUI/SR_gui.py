@@ -13,7 +13,7 @@ import json
 # 이미지 바꿀 때마다 실행   
 import resources_rc     #  pyrcc5 resources.qrc -o resources_rc.py
 
-from_class = uic.loadUiType("./SR_monitor_screen.ui")[0]        # "./src/gui/SR_monitor_screen.ui"
+from_class = uic.loadUiType("./src/SR_monitor_screen.ui")[0]    # ./src/gui/SR_monitor_screen.ui
 
 class getApiData():
     def __init__(self):
@@ -66,20 +66,24 @@ class getApiData():
 class WindowClass(QMainWindow, from_class, getApiData):
     def __init__(self, db_instance):
         super().__init__()
+        self.setupUi(self)
+        self.Setup()
+        self.cursor = db_instance.cursor
+        self.conn = db_instance.conn
+
+        self.camera_id = self.camera_ids['C']
+
         # getApiData 클래스 인스턴스 초기화
         getApiData.__init__(self)
         # Detection_Screen 클래스 인스턴스 초기화
-        self.detection_screen = Detection_Screen(self)  
+#        self.detection_screen = Detection_Screen(self, self.camera_id)  
+        self.detection_screen = Detection_Screen(self.camera_id, self)
+
         # Detection_Screen 클래스 인스턴스 초기화
-        self.estimation_screen = Pose_Estimation_Screen(self)  
+        self.estimation_screen = Pose_Estimation_Screen(self.camera_id, self)  
 
         self.detection_screen.closed.connect(self.stopBlinking)  # Connect the signal
         self.estimation_screen.closed.connect(self.onEstimationScreenClosed)  # Connect the signal
-
-        self.cursor = db_instance.cursor
-        self.conn = db_instance.conn
-        self.setupUi(self)
-        self.Setup()
 
         # 경찰 이미지 btn 관련 설정 및 이벤트 처리
         self.btn_police.setStyleSheet("background-image: url(:/newPrefix/police.png);") 
@@ -97,8 +101,7 @@ class WindowClass(QMainWindow, from_class, getApiData):
         # self.person_count_timer.timeout.connect(self.UpdatePersonCount)
         # self.person_count_timer.start()
 
-        # 위치별 카메라 관련 설정 및 이벤트처리
-        self.camera_id = { 'A' : 'A', 'B': 'B', 'C': 'C' }
+        # 위치별 카메라 관련 이벤트처리
         self.btn_cameraA.setStyleSheet("border-radius : 30px; border : 1px solid black; font: bold 20px;")
         self.btn_cameraB.setStyleSheet("border-radius : 30px; border : 1px solid black; font: bold 20px;")
         self.btn_cameraC.setStyleSheet("border-radius : 30px; border : 1px solid black; font: bold 20px;")
@@ -113,7 +116,7 @@ class WindowClass(QMainWindow, from_class, getApiData):
         self.frame_cameraC.setStyleSheet(f"background-color: {self.level_colors['Default']};")
 
         # 화면 시작 시 랜덤 버튼 표시
-        self.showRandomButton() 
+        self.showDetectedCamera() 
 
         # 5초마다 checkButtonClick 실행
         self.check_timer = QTimer(self)
@@ -158,9 +161,12 @@ class WindowClass(QMainWindow, from_class, getApiData):
         # 위험 레벨 색상 관련 파라미터
         self.level_colors = {
             "Default" : 'transparent',
-            "Red" : 'rgba(255, 0, 0, 128)',         # 위험 물품 감지
+            "Red" : 'rgba(255, 0, 0, 128)',         # 위험 물품 감지, 폭행 및 쓰러진 승객 감지
             "Yellow" : 'rgba(255, 255, 0, 128)'     # 교통 약자 감지
-        }
+        }  
+
+        # 카메라 위치 및 영상 경로 관련 파라미터
+        self.camera_ids = { 'A' : 'A', 'B': 'B', 'C': 'C' }
     
     def Showtime(self):
         # 날짜
@@ -180,18 +186,20 @@ class WindowClass(QMainWindow, from_class, getApiData):
     def BlinkFrame(self):
         current_seconds = QTime.currentTime().second()
         if current_seconds % 2 == 0:  # 짝수 초일 때
-            background_color = self.level_colors['Red']
+            if self.camera_id == 'A': 
+                background_color = self.level_colors['Yellow']
+            else:
+                background_color = self.level_colors['Red']
         else:  # 홀수 초일 때
             background_color = self.level_colors['Default']
         
-        if hasattr(self, 'random_button'):
-            if self.random_button == self.btn_cameraA:
-                self.frame_cameraA.setStyleSheet(f"background-color: {background_color}; border-radius : 30px")
-            elif self.random_button == self.btn_cameraB:
-                self.frame_cameraB.setStyleSheet(f"background-color: {background_color}; border-radius : 30px")
-            elif self.random_button == self.btn_cameraC:
-                self.frame_cameraC.setStyleSheet(f"background-color: {background_color}; border-radius : 30px")
-    
+        if self.camera_btn == self.btn_cameraA:
+            self.frame_cameraA.setStyleSheet(f"background-color: {background_color}; border-radius : 30px")
+        elif self.camera_btn == self.btn_cameraB:
+            self.frame_cameraB.setStyleSheet(f"background-color: {background_color}; border-radius : 30px")
+        elif self.camera_btn == self.btn_cameraC:
+            self.frame_cameraC.setStyleSheet(f"background-color: {background_color}; border-radius : 30px")
+
     def ButtonClick(self):
         self.blink_enabled = False  # 클릭 시 깜빡임 중지
         self.hideAndStopBlinking()
@@ -203,16 +211,23 @@ class WindowClass(QMainWindow, from_class, getApiData):
     def BlinkBackground(self):
         current_seconds = QTime.currentTime().second()
         if current_seconds % 2 == 0:  # 짝수 초일 때
-            background_color = 'rgba(255, 0, 0, 128)'
+            if self.camera_id == 'A': 
+                background_color = self.level_colors['Yellow']
+            else:
+                background_color = self.level_colors['Red']
             if not self.detection_screen_shown:
                 self.detection_screen_timer.start()  # 0.5초 후에 Detection_Screen을 표시
         else:  # 홀수 초일 때
-            background_color = 'transparent'
+            background_color = self.level_colors['Default']
         self.frame.setStyleSheet(f"background-color: {background_color};")
 
     def showDetectionScreen(self):
+        self.detection_screen.move(800, 600)    # 원하는 (x, y) 좌표를 설정합니다.
         self.detection_screen.show()
-        self.estimation_screen.show()
+        if self.camera_id != 'A':
+            self.estimation_screen.move(200, 600)  
+            self.estimation_screen.show()
+
         self.timer.stop()  # Pause main timer
         self.detection_screen_shown = True  # 플래그 업데이트
     
@@ -226,14 +241,13 @@ class WindowClass(QMainWindow, from_class, getApiData):
         self.hideAndStopBlinking()
 
     def hideAndStopBlinking(self):
-        if hasattr(self, 'random_button'):
-            self.random_button.hide()
-            if self.random_button == self.btn_cameraA:
-                self.frame_cameraA.setStyleSheet(f"background-color: {self.level_colors['Default']};")
-            elif self.random_button == self.btn_cameraB:
-                self.frame_cameraB.setStyleSheet(f"background-color: {self.level_colors['Default']};")
-            elif self.random_button == self.btn_cameraC:
-                self.frame_cameraC.setStyleSheet(f"background-color: {self.level_colors['Default']};")
+        self.camera_btn.hide()
+        if self.camera_btn == self.btn_cameraA:
+            self.frame_cameraA.setStyleSheet(f"background-color: {self.level_colors['Default']};")
+        elif self.camera_btn == self.btn_cameraB:
+            self.frame_cameraB.setStyleSheet(f"background-color: {self.level_colors['Default']};")
+        elif self.camera_btn == self.btn_cameraC:
+            self.frame_cameraC.setStyleSheet(f"background-color: {self.level_colors['Default']};")
 
     # def UpdatePersonCount(self):
     #     self.person_num += 1
@@ -255,22 +269,27 @@ class WindowClass(QMainWindow, from_class, getApiData):
         self.btn_cameraB.hide()
         self.btn_cameraC.hide()
 
-    def showRandomButton(self):
-        self.random_button = random.choice([self.btn_cameraA, self.btn_cameraB, self.btn_cameraC])
-        self.random_button.show()
+    def showDetectedCamera(self):
+        if self.camera_id == "A":
+            self.camera_btn = self.btn_cameraA
+        elif self.camera_id == "B":
+            self.camera_btn = self.btn_cameraB
+        elif self.camera_id == "C":
+            self.camera_btn = self.btn_cameraC
+        self.camera_btn.show()
 
     def PoliceButtonClick(self):
         reply = QMessageBox.question(self, "Police Button", "Police button clicked! Do you want to proceed?", QMessageBox.Yes | QMessageBox.No)
         if reply == QMessageBox.Yes:
             emergency_data = self.ShowEmergencyCenter()
             police_station = self.GetPoliceStation(emergency_data)
-            QMessageBox.information(self, "Police Station", f"신고 접수: {police_station}")
+            QMessageBox.information(self, "Police Station", f"긴급 출동 요청: {police_station}")
 
             current_datetime = QDateTime.currentDateTime().toString('yyyy-MM-dd hh:mm:ss')
             self.case_num = self.GetNextCaseNum()
             query = f"""
             INSERT INTO copilot_cctv (Case_num, Camera_id, Person_num, Situation, Solution, Emergency_call, Date)
-            VALUES ('{self.case_num}', '{self.camera_id['A']}', '{self.person_num}', '폭행발생', '긴급 출동 요청', '{police_station}', '{current_datetime}')
+            VALUES ('{self.case_num}', '{self.camera_id}', '{self.person_num}', '폭행발생', '긴급 출동 요청', '{police_station}', '{current_datetime}')
             """
             self.ExecuteQuery(query)
 
@@ -279,13 +298,13 @@ class WindowClass(QMainWindow, from_class, getApiData):
         if reply == QMessageBox.Yes:
             emergency_data = self.ShowEmergencyCenter()
             ambulance_station = self.GetAmbulanceStation(emergency_data)
-            QMessageBox.information(self, "Fire Station", f"신고 접수: {ambulance_station}")
+            QMessageBox.information(self, "Fire Station", f"긴급 출동 요청: {ambulance_station}")
 
             current_datetime = QDateTime.currentDateTime().toString('yyyy-MM-dd hh:mm:ss')
             self.case_num = self.GetNextCaseNum()
             query = f"""
             INSERT INTO copilot_cctv (Case_num, Camera_id, Person_num, Situation, Solution, Emergency_call, Date)
-            VALUES ('{self.case_num}', '{self.camera_id['A']}', '{self.person_num}', '쓰러진승객발생', '긴급 출동 요청', '{ambulance_station}', '{current_datetime}')
+            VALUES ('{self.case_num}', '{self.camera_id}', '{self.person_num}', '쓰러진승객발생', '긴급 출동 요청', '{ambulance_station}', '{current_datetime}')
             """
             self.ExecuteQuery(query)
 
@@ -299,11 +318,9 @@ class WindowClass(QMainWindow, from_class, getApiData):
         try:
             self.cursor.execute(query)
             self.conn.commit()
-            #QMessageBox.information(self, "Success", "Data inserted successfully!")
             print("Data inserted successfully!")
             print('-----------------------------------')
         except Exception as e:
-            #QMessageBox.critical(self, "Error", f"An error occurred: {e}")
             print(f"An error occurred: {e}")
             print('-----------------------------------')
 
