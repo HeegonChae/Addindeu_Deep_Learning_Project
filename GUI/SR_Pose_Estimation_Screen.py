@@ -10,16 +10,16 @@ from PyQt5.QtCore import pyqtSignal
 class Pose_Estimation_Screen(QDialog):   
     closed = pyqtSignal()  # Signal emitted when the window is closed
     
-    def __init__(self, parent=None):  # 부모 window 설정        
+    def __init__(self, parent=None):  
         super(Pose_Estimation_Screen, self).__init__(parent)       
-        detection_screen_ui = './src/gui/SR_estimation_screen.ui'     
+        detection_screen_ui = './SR_estimation_screen.ui'                # './src/SR_estimation_screen.ui'     
         uic.loadUi(detection_screen_ui, self)
 
         self.label_estimated = self.findChild(QLabel, 'labelEstimated')
         self.Loadlastvideo()
 
     def Loadlastvideo(self):
-        estimation_video_dir = './data/received_files/lstm'
+        estimation_video_dir = './data/output/lstm'
         # lstm 디렉토리에서 모든 .mp4 파일을 가져옵니다.
         video_files = [f for f in os.listdir(estimation_video_dir) if f.endswith('.mp4') and os.path.isfile(os.path.join(estimation_video_dir, f))]
         

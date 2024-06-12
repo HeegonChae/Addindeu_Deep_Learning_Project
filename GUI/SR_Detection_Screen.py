@@ -9,16 +9,16 @@ from PyQt5.QtCore import pyqtSignal
 class Detection_Screen(QDialog):   
     closed = pyqtSignal()  # Signal emitted when the window is closed
     
-    def __init__(self, parent=None):  # 부모 window 설정        
+    def __init__(self, parent=None):                   
         super(Detection_Screen, self).__init__(parent)       
-        detection_screen_ui = './src/gui/SR_detection_screen.ui'     
+        detection_screen_ui = './SR_detection_screen.ui'               #'./src/SR_detection_screen.ui'     
         uic.loadUi(detection_screen_ui, self)
 
         self.label_detected = self.findChild(QLabel, 'labelDetected')  # QLabel 객체를 가져옵니다. 'imageLabel'은 UI 파일에 정의된 QLabel의 이름입니다.
         self.Loadlastimage()
 
     def Loadlastimage(self):
-        detection_img_dir = './data/received_files/detection'
+        detection_img_dir = './data/output/detection'
         # detection_img_dir 디렉토리에서 모든 파일을 가져옵니다.
         image_files = [f for f in os.listdir(detection_img_dir) if os.path.isfile(os.path.join(detection_img_dir, f))]
         
