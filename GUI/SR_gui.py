@@ -223,7 +223,7 @@ class WindowClass(QMainWindow, from_class, getApiData):
     def stopBlinking(self):
         self.blink_enabled = False  # Stop blinking when the detection screen is closed
         self.frame.setStyleSheet(f"background-color: {self.level_colors['Default']};")
-        #self.hideAndStopBlinking()
+        self.hideAndStopBlinking()
 
     def hideAndStopBlinking(self):
         if hasattr(self, 'random_button'):
