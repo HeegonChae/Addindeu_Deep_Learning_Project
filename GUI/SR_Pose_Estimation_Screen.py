@@ -10,9 +10,9 @@ from PyQt5.QtCore import pyqtSignal
 class Pose_Estimation_Screen(QDialog):   
     closed = pyqtSignal()  # Signal emitted when the window is closed
     
-    def __init__(self, parent=None):  # 부모 window 설정        
+    def __init__(self, parent=None):  
         super(Pose_Estimation_Screen, self).__init__(parent)       
-        detection_screen_ui = './src/gui/SR_estimation_screen.ui'     
+        detection_screen_ui = './SR_estimation_screen.ui'                # './src/gui/SR_estimation_screen.ui'     
         uic.loadUi(detection_screen_ui, self)
 
         self.label_estimated = self.findChild(QLabel, 'labelEstimated')
