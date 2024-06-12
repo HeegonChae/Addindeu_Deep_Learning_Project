@@ -6,8 +6,8 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5 import uic
 from Connect import Connect
-from Detection_Screen import Detection_Screen
-from Pose_Estimation_Screen import Pose_Estimation_Screen
+from SR_Detection_Screen import Detection_Screen
+from SR_Pose_Estimation_Screen import Pose_Estimation_Screen
 import requests
 import json
 # 이미지 바꿀 때마다 실행   
