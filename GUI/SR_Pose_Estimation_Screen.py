@@ -7,19 +7,32 @@ from PyQt5.QtGui import *
 from PyQt5 import uic
 from PyQt5.QtCore import pyqtSignal
 
+# 영상 경로 관련 파라미터
+camera_dirs = {
+        "A" : ['./data/output/detection_A'],
+        "B" : ['./data/output/detection_B', './data/output/lstm_B'],
+        "C" : ['./data/output/detection_C',  './data/output/lstm_C']
+    }
+
 class Pose_Estimation_Screen(QDialog):   
     closed = pyqtSignal()  # Signal emitted when the window is closed
     
-    def __init__(self, parent=None):  
+    def __init__(self, camera_id, parent=None):  # 부모 window 설정        
         super(Pose_Estimation_Screen, self).__init__(parent)       
-        detection_screen_ui = './SR_estimation_screen.ui'                # './src/SR_estimation_screen.ui'     
+        detection_screen_ui = './src/SR_estimation_screen.ui'           # ./src/gui/SR_estimation_screen.ui 
         uic.loadUi(detection_screen_ui, self)
 
         self.label_estimated = self.findChild(QLabel, 'labelEstimated')
-        self.Loadlastvideo()
+        self.estimation_video_dir = None
+        if camera_id == 'B':
+            self.estimation_video_dir = camera_dirs['B'][-1]
+            self.Loadlastvideo()
+        elif camera_id == 'C':
+            self.estimation_video_dir = camera_dirs['C'][1]         
+            self.Loadlastvideo()
 
     def Loadlastvideo(self):
-        estimation_video_dir = './data/output/lstm'
+        estimation_video_dir = self.estimation_video_dir
         # lstm 디렉토리에서 모든 .mp4 파일을 가져옵니다.
         video_files = [f for f in os.listdir(estimation_video_dir) if f.endswith('.mp4') and os.path.isfile(os.path.join(estimation_video_dir, f))]
         
@@ -42,7 +55,7 @@ class Pose_Estimation_Screen(QDialog):
         ret, frame = self.cap.read()
         if ret:
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            frame = cv2.resize(frame, (640,640))
+            frame = cv2.resize(frame, (320, 320))
             h, w, ch = frame.shape
             # print(h, w, ch)
             # print('--------------------------------')
@@ -59,9 +72,13 @@ class Pose_Estimation_Screen(QDialog):
         event.accept()  # Ensure the event is accepted and the window is closed
 
 if __name__ == '__main__':
-    # print(os.getcwd())
-
     app = QApplication(sys.argv)
-    pose_estimation_screen = Pose_Estimation_Screen()
-    pose_estimation_screen.show()
+    
+    camera_id = 'A'  # or 'B' or 'C'
+    if camera_id != 'B':
+        pose_estimation_screen = Pose_Estimation_Screen(camera_id)
+        pose_estimation_screen.show()
+    else:
+        print("Camera ID is 'A'. Pose_Estimation_Screen will not be shown.")
+    
     sys.exit(app.exec_())
