@@ -8,6 +8,7 @@ Original file is located at
 
 설치사항) 
 pip install ultralytics
+pip install git+https://github.com/openai/CLIP.git
 """
 
 import cv2
