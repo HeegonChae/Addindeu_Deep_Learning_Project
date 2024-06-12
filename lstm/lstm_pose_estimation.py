@@ -6,7 +6,6 @@ import json
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, Dataset
-from datetime import datetime
 
 # YOLOv8 Pose 모델 로드
 model = YOLO('yolov8s-pose.pt')
@@ -176,6 +175,7 @@ def process_individual_file(file_path):
 
 # 20개의 텍스트 파일 처리
 skeleton_data_dir = './data/skeleton_data'
+num_people = 2
 all_predictions = []
 for person_idx in range(num_people):
     file_path = os.path.join(skeleton_data_dir, f'person_{person_idx}.txt')
@@ -186,12 +186,11 @@ for person_idx in range(num_people):
         all_predictions.append([])  # Empty list for missing files
 
 # 비디오 초기화
-video_path = './data/violate.MOV'
-cap = cv2.VideoCapture(video_path)
+cap = cv2.VideoCapture(input_video_path)
 fps = cap.get(cv2.CAP_PROP_FPS)
 
 # 비디오 파일 이름에서 이름 추출
-video_name = os.path.splitext(os.path.basename(video_path))[0]
+video_name = os.path.splitext(os.path.basename(input_video_path))[0]
 
 # 비디오 저장 설정
 output_path = f'./output_{video_name}.avi'
@@ -240,12 +239,19 @@ with torch.no_grad():
         out.write(frame)
         frame_idx += 1
 
-# 현재 날짜와 시간 가져오기
-current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
+cap.release()
+out.release()
 
-# 폴더 경로 설정
-folder_path = f"./data/lstm/{current_time}"
-os.makedirs(folder_path, exist_ok=True)
+# 디렉토리 생성
+base_dir = './data/lstm/'
+N = 1
+while True:
+    folder_path = os.path.join(base_dir, f'input{N}')
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+        print(f'Created directory: {folder_path}')
+        break
+    N += 1
 
 # Ensure end_frame is updated for the last event
 if len(change_points) > 0:
@@ -255,9 +261,9 @@ if len(change_points) > 0:
 video_info = {
     "video_info": {
         "folder": folder_path,
-        "video_name": f'C_{video_name}.mp4',
-        "json_name": f'C_{video_name}.json',
-        "txt_name": f'C_{video_name}.txt',
+        "video_name": f'{video_name}.mp4',
+        "json_name": f'{video_name}.json',
+        "txt_name": f'{video_name}.txt',
     },
     "size": {
         "width": int(cap.get(3)),
@@ -298,13 +304,9 @@ for i in range(len(change_points) - 1):
             "frame": {"start": start_frame, "end": end_frame},
         })
 
-
-
 # JSON 파일 저장
 output_json_path = os.path.join(folder_path, f'{video_name}.json')
 with open(output_json_path, 'w', encoding='utf-8') as json_file:
     json.dump(video_info, json_file, ensure_ascii=False, indent=4)
 
-cap.release()
-out.release()
 print(f"JSON 파일이 {output_json_path}에 저장되었습니다.")
