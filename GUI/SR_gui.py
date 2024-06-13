@@ -13,7 +13,7 @@ import json
 # 이미지 바꿀 때마다 실행   
 import resources_rc     #  pyrcc5 resources.qrc -o resources_rc.py
 
-from_class = uic.loadUiType("./src/SR_monitor_screen.ui")[0]    # ./src/gui/SR_monitor_screen.ui
+from_class = uic.loadUiType("./src/gui/SR_monitor_screen.ui")[0]    # ./src/gui/SR_monitor_screen.ui
 
 class getApiData():
     def __init__(self):
@@ -76,7 +76,6 @@ class WindowClass(QMainWindow, from_class, getApiData):
         # getApiData 클래스 인스턴스 초기화
         getApiData.__init__(self)
         # Detection_Screen 클래스 인스턴스 초기화
-#        self.detection_screen = Detection_Screen(self, self.camera_id)  
         self.detection_screen = Detection_Screen(self.camera_id, self)
 
         # Detection_Screen 클래스 인스턴스 초기화
@@ -96,10 +95,10 @@ class WindowClass(QMainWindow, from_class, getApiData):
         self.blink_enabled = True 
 
         # Person count 업데이트 타이머
-        # self.person_count_timer = QTimer()
-        # self.person_count_timer.setInterval(1000)  # 1초 간격
-        # self.person_count_timer.timeout.connect(self.UpdatePersonCount)
-        # self.person_count_timer.start()
+        self.person_count_timer = QTimer()
+        self.person_count_timer.setInterval(1000)  # 1초 간격
+        self.person_count_timer.timeout.connect(self.UpdatePersonCount)
+        self.person_count_timer.start()
 
         # 위치별 카메라 관련 이벤트처리
         self.btn_cameraA.setStyleSheet("border-radius : 30px; border : 1px solid black; font: bold 20px;")
@@ -131,6 +130,9 @@ class WindowClass(QMainWindow, from_class, getApiData):
         self.detection_screen_timer.timeout.connect(self.showDetectionScreen)
         # Detection_Screen 인스턴스 관리 플래그
         self.detection_screen_shown = False  
+
+        # 증가 감소 관련 카운터 초기화
+        self.increase_count = 0
 
     def Setup(self):
         # DB 관련 파라미터
@@ -222,10 +224,10 @@ class WindowClass(QMainWindow, from_class, getApiData):
         self.frame.setStyleSheet(f"background-color: {background_color};")
 
     def showDetectionScreen(self):
-        self.detection_screen.move(800, 600)    # 원하는 (x, y) 좌표를 설정합니다.
+        self.detection_screen.move(200, 600)    # 원하는 (x, y) 좌표를 설정합니다.
         self.detection_screen.show()
         if self.camera_id != 'A':
-            self.estimation_screen.move(200, 600)  
+            self.estimation_screen.move(800, 600)  
             self.estimation_screen.show()
 
         self.timer.stop()  # Pause main timer
@@ -249,21 +251,46 @@ class WindowClass(QMainWindow, from_class, getApiData):
         elif self.camera_btn == self.btn_cameraC:
             self.frame_cameraC.setStyleSheet(f"background-color: {self.level_colors['Default']};")
 
-    # def UpdatePersonCount(self):
-    #     self.person_num += 1
-    #     if self.person_num < int(self.person_threshold / 2):
-    #         status = "good"
-    #     elif int(self.person_threshold / 2) <= self.person_num < self.person_threshold:
-    #         status = "soso"
-    #     else:
-    #         status = "bad"
+    def UpdatePersonCount(self):
+        if self.increase_count < 3:
+            self.person_num += 1
+            self.increase_count += 1
+        else:
+            self.person_num -= 1
+            self.increase_count = 0
 
-    #     color = self.person_colors[status]
-    #     self.labelCount.setStyleSheet(f"color: {color};")
-    #     self.labelCount.setText(str(self.person_num))
+        self.UpdateStatus()
 
-    #     self.labelEmoji.setStyleSheet(f"background-image: url({self.image_paths[status]});")
-    
+        color = self.person_colors[self.status]
+        self.labelCount.setStyleSheet(f"color: {color};")
+        self.labelCount.setText(str(self.person_num))
+        self.labelEmoji.setStyleSheet(f"background-image: url({self.image_paths[self.status]});")
+
+        if self.person_num >= self.person_threshold:
+            QMessageBox.warning(self, "Overcrowded", "Overcrowded! 더 이상 탑승은 위험!")
+            self.person_count_timer.stop()
+            QTimer.singleShot(0, self.ReducePersonCount)
+
+    def ReducePersonCount(self):
+        if self.person_num >= int(self.person_threshold / 2):
+            self.person_num -= 1
+            self.UpdateStatus()
+            color = self.person_colors[self.status]
+            self.labelCount.setStyleSheet(f"color: {color};")
+            self.labelCount.setText(str(self.person_num))
+            self.labelEmoji.setStyleSheet(f"background-image: url({self.image_paths[self.status]});")
+            QTimer.singleShot(1000, self.ReducePersonCount)
+        else:
+            self.person_count_timer.start()
+
+    def UpdateStatus(self):
+        if self.person_num < int(self.person_threshold / 2):
+            self.status = "good"
+        elif int(self.person_threshold / 2) <= self.person_num < self.person_threshold:
+            self.status = "soso"
+        else:
+            self.status = "bad"
+
     def hideAllButtons(self):
         self.btn_cameraA.hide()
         self.btn_cameraB.hide()
