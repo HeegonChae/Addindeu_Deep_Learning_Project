@@ -13,7 +13,7 @@ import json
 # 이미지 바꿀 때마다 실행   
 import resources_rc     #  pyrcc5 resources.qrc -o resources_rc.py
 
-from_class = uic.loadUiType("./src/gui/SR_monitor_screen.ui")[0]    # ./src/gui/SR_monitor_screen.ui
+from_class = uic.loadUiType("./src/SR_monitor_screen.ui")[0]    # ./src/gui/SR_monitor_screen.ui
 
 class getApiData():
     def __init__(self):
