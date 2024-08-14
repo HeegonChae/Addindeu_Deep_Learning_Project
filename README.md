@@ -1,7 +1,9 @@
 # 🚍버스 운전자 보조 목적의 실시간 CCTV 모니터링 시스템🚍
-![bus_cctv](https://github.com/addinedu-ros-5th/deeplearning-repo-2/assets/163790408/48c3854f-63bf-4c3e-bc36-22cb1c9a3077)
-
-
+  <div align=center> 
+      <br/>
+      <img src="https://github.com/addinedu-ros-5th/deeplearning-repo-2/assets/163790408/48c3854f-63bf-4c3e-bc36-22cb1c9a3077" width ="400">
+  </div>
+      
 # 1. 👨‍🏫 프로젝트 소게 👨‍🏫
 ## 1.1 프로젝트 선정배경 📍
 ![bus_cctv2](https://github.com/addinedu-ros-5th/deeplearning-repo-2/assets/163790408/1e1a52d3-9463-4e2f-a236-5dc1d5c2178e)
@@ -44,7 +46,7 @@
 
 
 # 3 🧠딥러닝 모델학습🧠
-## 3.1 모델 학습결과 
+## 3.1 학습결과 
 * 사고 예방_위험물품(**knife, gun model 클래스**)
   - **YOLOv8l 모델**
     - Results
@@ -77,3 +79,4 @@
       <div align=left> 
          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;(1) YOLOv8l 학습 결과&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;(2) YOLOv8l-worldv2 학습 결과 <br>
       </div>
+## 3.2 추론결과 
