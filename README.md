@@ -45,26 +45,35 @@
 
 # 3 🧠딥러닝 모델학습🧠
 ## 3.1 모델 학습결과 
-* 사고 예방_위험물품(**knife, gun model 클래스**) 
+* 사고 예방_위험물품(**knife, gun model 클래스**)
+  - **YOLOv8l 모델**
+    - Results
  <img width="1172" alt="스크린샷 2024-06-18 오후 9 19 24" src="https://github.com/addinedu-ros-5th/deeplearning-repo-2/assets/163790408/07470267-8bd1-4251-ba16-9c7fd0d6ea9b">
 
 * 사고 예방_거동 불편자(**wheelchair, crutches 클래스**)
   - **YOLOv8l 모델 vs YOLOv8l-worldv2 모델**
     - Confusion Matrix(Normalized)
-  <div align=center> 
-  <br/>
-  <img src="https://github.com/user-attachments/assets/92e5c0cd-5bae-4a3d-a55d-4cfceb1f2786" width ="700">
-    
-    (1) YOLOv8l 학습 결과 <br>
-        [ 2-Classes ->  3-Classes(**stick_user, person_no, wheelchair_user**) ]
-  </div>
-  <div align=center> 
-  <br/>
-  <img src="https://github.com/user-attachments/assets/14752f67-efc1-49ff-aeee-51da4d3009a2" width ="700">
-    
-    (2) YOLOv8l-worldv2 학습 결과 <br>
-        [ 2-Classes ->  5-Classes(**person-crutches, person-no, person-rollator, person-stick, person-wheelchair**) ]
-  </div>
-  
+      <div align=center> 
+      <br/>
+      <img src="https://github.com/user-attachments/assets/92e5c0cd-5bae-4a3d-a55d-4cfceb1f2786" width ="700">
+      
+        (1) YOLOv8l 학습 결과 <br>
+            [ 2-Classes ->  3-Classes(**stick_user, person_no, wheelchair_user**) ]
+      </div>
+      <div align=center> 
+      <br/>
+      <img src="https://github.com/user-attachments/assets/14752f67-efc1-49ff-aeee-51da4d3009a2" width ="700">
+        
+        (2) YOLOv8l-worldv2 학습 결과 <br>
+            [ 2-Classes ->  5-Classes(**person-crutches, person-no, person-rollator, person-stick, person-wheelchair**) ]
+      </div>
 
-
+    - Results
+      <div align=center> 
+      <br/>
+      <img src="https://github.com/user-attachments/assets/cfaa5426-8cbe-4dde-99bc-957bccdd686b" width ="400">
+      <img src="https://github.com/user-attachments/assets/625f8f55-32f1-4f60-9f54-5b631695fa7d" width ="400">  
+      </div>        
+      <div align=left> 
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;(1) YOLOv8l 학습 결과&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;(2) YOLOv8l-worldv2 학습 결과 <br>
+      </div>
