@@ -6,8 +6,11 @@
       
 # 1. 👨‍🏫 프로젝트 소게 👨‍🏫
 ## 1.1 프로젝트 선정배경 📍
-![bus_cctv2](https://github.com/addinedu-ros-5th/deeplearning-repo-2/assets/163790408/1e1a52d3-9463-4e2f-a236-5dc1d5c2178e)
-
+  <div align=center> 
+      <br/>
+      <img src=https://github.com/addinedu-ros-5th/deeplearning-repo-2/assets/163790408/1e1a52d3-9463-4e2f-a236-5dc1d5c2178e" width ="400">
+  </div>
+      
 ## 1.2 프로젝트 목표 🎯 
 - 이미지 인식 딥러닝 모델 설계 과정에 대한 이해 
 - 자율주행 버스 내 CCTV를 활용하여, 탑승객의 행동과 위치를 실시간으로 추적하고 분석하는 딥러닝 모델 개발
@@ -48,7 +51,7 @@
 # 3 🧠딥러닝 모델학습🧠
 ## 3.1 학습결과 
 * 사고 예방_위험물품(**knife, gun model 클래스**)
-  - **YOLOv8l 모델**
+  - **YOLOv8m 모델**
     - Results
  <img width="1172" alt="스크린샷 2024-06-18 오후 9 19 24" src="https://github.com/addinedu-ros-5th/deeplearning-repo-2/assets/163790408/07470267-8bd1-4251-ba16-9c7fd0d6ea9b">
 
