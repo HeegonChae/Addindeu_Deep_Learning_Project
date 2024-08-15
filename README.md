@@ -92,7 +92,7 @@
  <img width="1172" alt="스크린샷 2024-06-18 오후 9 19 24" src="https://github.com/addinedu-ros-5th/deeplearning-repo-2/assets/163790408/07470267-8bd1-4251-ba16-9c7fd0d6ea9b">
 
 * 사고 예방_거동 불편자(**wheelchair, crutches 클래스**)
-  - **YOLOv8l 모델 vs YOLOv8l-worldv2 모델**
+  - **YOLOv8l-worldv2 모델**
     - Confusion Matrix(Normalized)
       <div align=center> 
       <br/>
