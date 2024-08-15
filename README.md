@@ -1,9 +1,10 @@
-# 🚍버스 운전자 보조 목적 실시간 CCTV 모니터링 시스템🚍
+# 🚍버스 운전자 보조 목적 실시간 CCTV 모니터링 시스템
   <div align=center> 
       <br/>
       <img src="https://github.com/addinedu-ros-5th/deeplearning-repo-2/assets/163790408/48c3854f-63bf-4c3e-bc36-22cb1c9a3077" width ="400">
   </div>
-      
+  (기간: 2024년 05월 27일 ~ 2024년 06월 13일)
+    
 # 1. 👨‍🏫 프로젝트 소개 👨‍🏫
 ## 1.1 프로젝트 선정배경 📍
   <div align=center> 
