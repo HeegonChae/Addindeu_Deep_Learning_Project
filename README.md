@@ -36,7 +36,7 @@
 |**구분**|**이름**|**역할**|
 |:------:|:------:|:-------|
 |팀장|홍권호|<ul><li>Image Classification 모델 학습</li><li> ROS2 통신 </li></ul>|
-|팀원|채희곤|<ul><li> Image Classification 모델 학습</li><li> GUI 설계 및 디자인 </li><li> 데이터베이스 구축  관리 </li></ul>|
+|**팀원**|**채희곤**|<ul><li> **Image Classification 모델 학습**</li><li> **GUI 설계 및 디자인** </li><li> **데이터베이스 구축  관리** </li></ul>|
 |팀원|현혜지|<ul><li> Action Recognition 모델 학습 </li><li> ROS2 통신 </li></ul>|
 |팀원|이유민|<ul><li> Action Recognition 모델 학습 </li></ul>|
 </div> 
