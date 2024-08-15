@@ -154,6 +154,6 @@
 ## 4.4 혼잡도 계산 및 긴급 신고
   <div align=center> 
       <br/>
-      <img src="https://github.com/user-attachments/assets/ac549f99-02de-4c98-90c9-159597ccc4bc" width ="500">
-      <img src="https://github.com/user-attachments/assets/6984c1d4-d150-452d-a89b-bc6e46a33794" width ="500">
+      <img src="https://github.com/user-attachments/assets/ac549f99-02de-4c98-90c9-159597ccc4bc" width ="450">
+      <img src="https://github.com/user-attachments/assets/6984c1d4-d150-452d-a89b-bc6e46a33794" width ="450">
   </div>
