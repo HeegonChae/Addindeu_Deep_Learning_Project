@@ -44,12 +44,44 @@
   <div align=center> 
     <img src="https://github.com/user-attachments/assets/7c2b0bf3-7dcb-440e-8fab-d48454260971" width ="800">
   </div>
-  
-## 2.2.1 영상 데이터 정보 ℹ️
-- 사고 대응_ 비정상 상황1(**fall_down 클래스**)
- 
-- 사고 대응_ 비정상 상황2(**violence 클래스**)
+## 2.1.2 이미지 데이터 전처리 ℹ️
+- 과적합 방지 해결방안(1) **타겟 클래스 Segmentation 라벨링**
+  - 'knife' 클래스 
+    <div align=center> 
+      <br/>
+      <img src="https://github.com/user-attachments/assets/f78e1d47-0112-4022-9788-805b7b71b25f" width ="800">
+  </div>
 
+ - 과적합 방지 해결방안(2) **다양한 Background Image 추가**
+   - ex) 우산, 소화기, 선풍기 등
+    <div align=center> 
+      <br/>
+      <img src="https://github.com/user-attachments/assets/c04d4ee8-0b4e-42ab-8785-14eb264f1a94" width ="800">
+  </div>
+
+## 2.2.1 영상 데이터 정보 ℹ️
+  <div align=center> 
+      <br/>
+      <img src="https://github.com/user-attachments/assets/abc6ef1a-d74d-448e-ba1b-6806e63ff021" width ="800">
+  </div>
+
+### 1분 이내 촬영 영상
+- 사고 대응_ 비정상 상황1(**fall_down 클래스**)
+  <div align=center> 
+      <br/>
+      <img src="https://github.com/user-attachments/assets/4c311293-6371-46e9-812b-9d07808c2f39" width ="600">
+  </div>
+  
+- 사고 대응_ 비정상 상황2(**violence 클래스**)
+  <div align=center> 
+      <br/>
+      <img src="https://github.com/user-attachments/assets/5ad222b9-74fb-4466-9f2a-e7fd64d76b89" width ="600">
+  </div>
+## 2.2.2 영상 데이터 전처리 ℹ️
+  <div align=center> 
+      <br/>
+      <img src="https://github.com/user-attachments/assets/b2110795-b16b-4486-849c-a13f45111535" width ="800">
+  </div>
 
 # 3 🧠딥러닝 모델학습🧠
 ## 3.1 학습결과 
