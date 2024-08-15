@@ -4,11 +4,11 @@
       <img src="https://github.com/addinedu-ros-5th/deeplearning-repo-2/assets/163790408/48c3854f-63bf-4c3e-bc36-22cb1c9a3077" width ="400">
   </div>
       
-# 1. 👨‍🏫 프로젝트 소게 👨‍🏫
+# 1. 👨‍🏫 프로젝트 소개 👨‍🏫
 ## 1.1 프로젝트 선정배경 📍
   <div align=center> 
       <br/>
-      <img src=https://github.com/addinedu-ros-5th/deeplearning-repo-2/assets/163790408/1e1a52d3-9463-4e2f-a236-5dc1d5c2178e" width ="400">
+      <img src="https://github.com/addinedu-ros-5th/deeplearning-repo-2/assets/163790408/1e1a52d3-9463-4e2f-a236-5dc1d5c2178e" width ="400">
   </div>
       
 ## 1.2 프로젝트 목표 🎯 
@@ -32,24 +32,28 @@
 
 
 
-# 2. 👨🏻‍💻 이미지 데이터 및 영상 데이터 수집 👨🏻‍💻
-## 2.1 이미지 데이터 정보 ℹ️
-- knife , gun 이미지 각 약(5000장)
-<img width="887" alt="스크린샷 2024-06-18 오후 9 04 44" src="https://github.com/addinedu-ros-5th/deeplearning-repo-2/assets/163790408/cce3dcb9-f161-401b-8703-5f586ca8947c">
-
-- wheelchair, crutches
+# 2. 👨🏻‍💻 이미지 및 영상 데이터 수집 & 전처리 👨🏻‍💻
+## 2.1.1 이미지 데이터 정보 ℹ️
+- knife , gun 이미지 각 약 **5000장**
+  <div align=center> 
+      <br/>
+      <img src="https://github.com/addinedu-ros-5th/deeplearning-repo-2/assets/163790408/cce3dcb9-f161-401b-8703-5f586ca8947c" width ="800">
+  </div>
   
-
-
-
-## 2.2 영상 데이터 정보 ℹ️
+- wheelchair, crutches 각 약 **5000장**
+  <div align=center> 
+    <img src="https://github.com/user-attachments/assets/7c2b0bf3-7dcb-440e-8fab-d48454260971" width ="800">
+  </div>
+  
+## 2.2.1 영상 데이터 정보 ℹ️
 - 사고 대응_ 비정상 상황1(**fall_down 클래스**)
-
+ 
 - 사고 대응_ 비정상 상황2(**violence 클래스**)
 
 
 # 3 🧠딥러닝 모델학습🧠
 ## 3.1 학습결과 
+### Train: 4000장 & Valid: 1000장 
 * 사고 예방_위험물품(**knife, gun model 클래스**)
   - **YOLOv8m 모델**
     - Results
@@ -76,10 +80,6 @@
     - Results
       <div align=center> 
       <br/>
-      <img src="https://github.com/user-attachments/assets/cfaa5426-8cbe-4dde-99bc-957bccdd686b" width ="400">
-      <img src="https://github.com/user-attachments/assets/625f8f55-32f1-4f60-9f54-5b631695fa7d" width ="400">  
-      </div>        
-      <div align=left> 
-         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;(1) YOLOv8l 학습 결과&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;(2) YOLOv8l-worldv2 학습 결과 <br>
+      <img src="https://github.com/user-attachments/assets/f90ada09-1bab-45f9-8cfa-5c7fc8b256fb" width ="700">
       </div>
 ## 3.2 추론결과 
