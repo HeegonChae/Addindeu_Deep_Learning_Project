@@ -114,4 +114,45 @@
       <br/>
       <img src="https://github.com/user-attachments/assets/f90ada09-1bab-45f9-8cfa-5c7fc8b256fb" width ="700">
       </div>
-## 3.2 추론결과 
+      
+* 사고 대응_쓰러진 승객 감지(**fall down 클래스**)
+  - **YOLOv8n-pose & LSTM**
+    - Results
+      <div align=center> 
+      <br/>
+      <img src="https://github.com/user-attachments/assets/5caf3fe8-7ac5-4123-90f1-6d585d342d3b" width ="500">
+      </div>
+      
+* 사고 대응_폭력 발생 감지(**violate 클래스**)
+  - **YOLOv8n-pose & LSTM**
+    - Results
+      <div align=center> 
+      <br/>
+      <img src="https://github.com/user-attachments/assets/d43d3074-fbfa-48cf-b58d-5d8d90a83912" width ="500">
+      </div>
+
+# 4 🔎기능 구현🔎
+## 4.1 거동불편자 감지
+  <div align=center> 
+      <br/>
+      <img src="https://github.com/user-attachments/assets/9f67c1cc-68a4-4c8c-a7f2-9fc9f30c42d1" width ="800">
+  </div>
+  
+## 4.2 위험물 및 폭력 발생 감지  
+  <div align=center> 
+      <br/>
+      <img src="https://github.com/user-attachments/assets/992f42db-ea2c-45ad-a07c-46ea09599b0d" width ="800">
+  </div>
+  
+## 4.３ 쓰러진 승객 감지
+  <div align=center> 
+      <br/>
+      <img src="https://github.com/user-attachments/assets/072988c2-fc27-4150-aaed-45d2316a4a75" width ="800">
+  </div>
+
+## 4.4 혼잡도 계산 및 긴급 신고
+  <div align=center> 
+      <br/>
+      <img src="https://github.com/user-attachments/assets/ac549f99-02de-4c98-90c9-159597ccc4bc" width ="500">
+      <img src="https://github.com/user-attachments/assets/6984c1d4-d150-452d-a89b-bc6e46a33794" width ="500">
+  </div>
